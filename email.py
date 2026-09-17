@@ -9,15 +9,17 @@ from googleapiclient.discovery import build
 
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+CREDENTIALS_FILE = "credentials.json"
+TOKEN_FILE = "token.json"
 
 
 def authenticate():
     creds = None
 
     # Load existing token
-    if os.path.exists("token.json"):
+    if os.path.exists(TOKEN_FILE):
         creds = Credentials.from_authorized_user_file(
-            "token.json",
+            TOKEN_FILE,
             SCOPES
         )
 
@@ -28,13 +30,13 @@ def authenticate():
     # First-time authentication
     if not creds or not creds.valid:
         flow = InstalledAppFlow.from_client_secrets_file(
-            "credentials.json",
+            CREDENTIALS_FILE,
             SCOPES
         )
 
         creds = flow.run_local_server(port=0)
 
-        with open("token.json", "w") as token:
+        with open(TOKEN_FILE, "w") as token:
             token.write(creds.to_json())
 
     return creds

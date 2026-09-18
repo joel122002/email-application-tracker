@@ -15,6 +15,7 @@ from application import (
     get_last_matching_application_id,
 )
 from gmail_client import get_last_n_emails
+from db import EmailRepository
 
 BLACKLISTED_EMAILS = [
     "jobalerts-noreply@linkedin.com"
@@ -203,10 +204,13 @@ graph_builder.add_conditional_edges("extract_email_data", is_job_email, {
 graph_builder.add_edge("handle_application", END)
 graph = graph_builder.compile()
 
-emails = get_last_n_emails(5)
+email_repository = EmailRepository()
+emails = get_last_n_emails(50)
 
 for email in emails:
     if email["From"] in BLACKLISTED_EMAILS:
+        continue
+    if email_repository.is_processed(email["ID"]):
         continue
     state = {
         "email": email["Body"],
@@ -216,3 +220,4 @@ for email in emails:
         "update_row_id": None
     }
     graph.invoke(state)
+    email_repository.mark_processed(email["ID"])

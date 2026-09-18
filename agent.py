@@ -206,6 +206,7 @@ graph = graph_builder.compile()
 
 email_repository = EmailRepository()
 emails = get_last_n_emails(50)
+emails.reverse()
 
 for email in emails:
     if any(blacklisted in email["From"] for blacklisted in BLACKLISTED_EMAILS):

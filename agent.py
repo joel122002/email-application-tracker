@@ -208,7 +208,7 @@ email_repository = EmailRepository()
 emails = get_last_n_emails(50)
 
 for email in emails:
-    if email["From"] in BLACKLISTED_EMAILS:
+    if any(blacklisted in email["From"] for blacklisted in BLACKLISTED_EMAILS):
         continue
     if email_repository.is_processed(email["ID"]):
         continue

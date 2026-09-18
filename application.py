@@ -139,7 +139,7 @@ def create_application(
 
 def get_last_matching_application_id(
     company_name: str,
-    role_name: str,
+    role_name: Optional[str],
 ) -> Optional[str]:
     """
     Finds the ID of the last matching application.
@@ -167,6 +167,7 @@ def get_last_matching_application_id(
     """
 
     rows = get_all_rows()
+    requested_role = (role_name or "").strip().lower()
 
     exact_matches = []
     applied_company_matches = []
@@ -184,8 +185,9 @@ def get_last_matching_application_id(
         )
 
         same_role = (
-            application.role_name.strip().lower()
-            == role_name.strip().lower()
+            not application.role_name.strip()
+            if not requested_role
+            else application.role_name.strip().lower() == requested_role
         )
 
         # Exact company + role match

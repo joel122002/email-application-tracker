@@ -5,3 +5,4 @@ beautifulsoup4==4.13.5
 langgraph==1.0.2
 langchain==1.0.2
 pydantic==2.12.0
+langchain-ollama==1.0.0

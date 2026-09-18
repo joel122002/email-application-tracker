@@ -16,6 +16,10 @@ from application import (
 )
 from gmail_client import get_last_n_emails
 
+BLACKLISTED_EMAILS = [
+    "jobalerts-noreply@linkedin.com"
+]
+
 class EmailType(str, Enum):
     APPLICATION = "application"
     REJECTION = "rejection"
@@ -202,6 +206,8 @@ graph = graph_builder.compile()
 emails = get_last_n_emails(5)
 
 for email in emails:
+    if email["From"] in BLACKLISTED_EMAILS:
+        continue
     state = {
         "email": email["Body"],
         "id": email["ID"],

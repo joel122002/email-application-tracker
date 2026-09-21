@@ -82,8 +82,8 @@ The current code uses the spreadsheet ID configured in `sheets.py` and the works
 
 The expected columns are:
 
-| ID | Date | Company Name | Role Name | Status |
-| --- | --- | --- | --- | --- |
+| ID  | Date | Company Name | Role Name | Status |
+| --- | ---- | ------------ | --------- | ------ |
 
 The application writes the statuses `applied`, `rejected`, and `proceeded`.
 

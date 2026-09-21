@@ -18,7 +18,9 @@ from gmail_client import get_last_n_emails
 from db import EmailRepository
 
 BLACKLISTED_EMAILS = [
-    "jobalerts-noreply@linkedin.com"
+    "jobalerts-noreply@linkedin.com",
+    "jobs-noreply@linkedin.com",
+    "support@builtin.com"
 ]
 
 class EmailType(str, Enum):

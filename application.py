@@ -166,6 +166,9 @@ def get_last_matching_application_id(
         )
     """
 
+    if not isinstance(company_name, str):
+        return None
+
     rows = get_all_rows()
     requested_role = (role_name or "").strip().lower()
 

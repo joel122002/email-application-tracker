@@ -113,6 +113,7 @@ def get_last_n_emails(n):
 
         from_email = ""
         date = ""
+        subject = ""
 
         for header in headers:
             name = header["name"].lower()
@@ -123,6 +124,9 @@ def get_last_n_emails(n):
             elif name == "date":
                 date = header["value"]
 
+            elif name == "subject":
+                subject = header["value"]
+
         # Extract body
         plaintext_body = extract_plaintext_body(
             email["payload"]
@@ -131,6 +135,7 @@ def get_last_n_emails(n):
         emails.append({
             "From": from_email,
             "Date": date,
+            "Subject": subject,
             "ID": email["id"],
             "Body": plaintext_body
         })

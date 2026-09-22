@@ -215,8 +215,14 @@ for email in emails:
         continue
     if email_repository.is_processed(email["ID"]):
         continue
+    email_text = email["Body"]
+    subject = email.get("Subject", "")
+
+    if subject:
+        email_text = f"Subject: {subject}\n\n{email_text}"
+
     state = {
-        "email": email["Body"],
+        "email": email_text,
         "id": email["ID"],
         "date": email["Date"],
         "extracted_data": None,
